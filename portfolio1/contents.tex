@@ -1,0 +1,196 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{commath}
+\usepackage[margin=1in]{geometry}
+\usepackage{xfrac}
+
+\title{PHY201 Portfolio 1}
+\author{Nicolas Nytko}
+\date{September 23, 2016}
+
+\nonumber
+
+\begin{document}
+\maketitle
+\newpage
+\section{Vector Arithmetic}
+The addition of two vectors, $\vec{v}$ and $\vec{u}$ can done by decomposing the two into their $x$ and $y$ (and $z$ if in 3D) forms and adding them.
+\begin{align}
+  \vec{v} + \vec{u} &= (v_x + u_x)\hat{\imath} + (v_y + u_y)\hat{\jmath} + (v_z + u_z)\hat{k} \\
+  &= \left\langle u_x + v_x, u_y + v_y, u_z + v_z \right\rangle
+\end{align}
+When a vector is given in magnitude and angle, trigonometry can be used to find the $x$ and $y$ components.
+\[\vec{v} = \left\langle r, \theta \right\rangle\]
+\[v_x = r\cos\theta, v_y = r\sin\theta\]
+Similarly, to convert a vector back into magnitude angle notation:
+\[ \vec{v} = \left\langle \norm{\vec{v}}, \tan^{-1}\frac{v_y}{v_x} \right\rangle \]
+\subsection{Coulomb's Law}
+According to Coulomb's Law, the force between two static electrically charged particles can be given by:
+\[ F_E = k\frac{q_1q_2}{r^2} \]
+$F_E$ is parallel to a line connecting the center points of $q_1$ and $q_2$. Coulomb's $k$ constant and $\epsilon_0$ are defined as:
+\begin{align}
+  k &= \frac{1}{4\pi\epsilon_0} \\
+  k &\approx 9 \cdot 10^9 \frac{N \ m^2}{C^2} \\
+  \epsilon_0 &\approx 8.85 \cdot 10^{-12} \frac{C^2}{N \ m^2}
+\end{align}
+The net force on an object is the sum of each individual force
+\[F_{net} = \Sigma_{i=1}^n F_i\]
+When calculating net force from multiple charges, break up the forces into $x$ and $y$ components and then add together.  Convert the force back into a magnitude and angle if necessary.
+\subsection{Electric Fields from Point Charges}
+Electric fields from point charge extend radially outwards from the origin point.  Positive charges radiate outwards, while negative charges radiate inwards.  The general definition of electric field is as follows:
+
+\[ \vec{E} \equiv \frac{F}{q} \sfrac{N}{C} \]
+We can combine the electric field formula with Coulomb's law to obtain the electric field from a point charge.
+
+\begin{align}
+  \vec{E} &= \frac{F}{q} \\
+  \vec{E} &= \frac{\frac{kqQ}{r^2}}{q} \\
+  \vec{E} &= \frac{kQ}{r^2}
+ \end{align}
+
+Finding the net field from multiple point charges is similar to finding the net force from multiple point charges.  Break up the fields into x and y components and add together.  Remember that negative charges have negative fields and positive charges have positive fields.
+\section{Continuous Charge Distributions}
+\subsection{Electric Fields}
+We cannot use \( E = \frac{kQ}{r^2} \) for non point charges.  To find the field from shaped charges, we must integrate the electric field with respect to the charge.
+\[ \vec{E} = k \int \frac{dq}{r^2} \hat{r} \]
+However, to know the amount of charge we first must find the charge density.  The charge density is defined as follows, depending on the dimensionality of the object.
+
+\begin{align}
+  \mathbb{R}^1 &: \lambda = \frac{q}{l} \\
+  \mathbb{R}^2 &: \sigma = \frac{q}{A} \\
+  \mathbb{R}^3 &: \rho = \frac{q}{V}
+\end{align}
+\[  \text{Where $l$, A, and V are length, area, and volume, respectively.} \]
+Once the charge density is determined, $dq$ can be replaced with either $\lambda dl$, $\sigma dA$, or $\rho dV$. $r$ is the distance from the charge to the point you are measuring the field from.  Note the distance should change depending on the ``slice'' of the charge you are integrating.
+It is very important to draw a free body diagram to be able to determine the sign of your charges.
+\subsection{Electric Potential}
+To find the total voltage of a point charge, we can use the equation
+\[V = k\frac{q}{r}\]
+however, if we want to find the total voltage of a shaped charge, we must integrate over the whole charge.
+\[V = k\int\frac{dq}{r}\]
+\subsection{Problem Solving Strategy}
+Continuous charge distribution problems can be solved using the following 4 step strategy:
+\begin{enumerate}
+\item Determine the value of $r$
+  \begin{enumerate}
+  \item $r$ is equal to the distance from the reference point to the charge ``slice''.
+  \item Should always be a positive value.
+  \end{enumerate}
+\item Determine $dq$
+  \begin{enumerate}
+  \item Depends on the dimensionality of charge object
+  \item $\lambda dl$ for one dimension
+    \begin{enumerate}
+    \item If integrating around a circle, $dl = rd\theta$
+    \end{enumerate}
+  \item $\sigma dA$ for two dimensions
+  \item $\rho dV$ for three dimensions
+  \end{enumerate}
+\item Determine the limits of integration (where is the charge located?)
+\item Check to make sure the integration makes sense
+  \begin{enumerate}
+  \item Follow the units and make sure they are correct
+  \item Is the sign of the integrated value correct?
+  \end{enumerate}
+\end{enumerate}
+\section{Gauss' Law}
+Gauss' law is defined as ``the total electric flux out of a closed surface is equal to the charge enclosed devided by the permittivity''.  In mathematical terms, it is defined as:
+\[\Phi_E = \frac{q_{enc}}{\epsilon_0}\]
+We can put this together with the other definition of flux that we have:
+\[\Phi_E = \oint\vec{E}\cdot\vec{dA}\]
+To get the relationship:
+\[\Phi_E = \oint\vec{E}\cdot\vec{dA}\ = \frac{q_{enc}}{\epsilon_0}\]
+Electric flux is the measure of how much electric field is flowing out of an area.  Positive flux means electric field is flowing out, while negative flux means electric field is flowing in.
+\subsection{Gaussian Surfaces}
+To find the electric field or flux in an area, we can create a theoretical surface to apply Gauss' law.  Use the following problem-solving strategy:
+\begin{enumerate}
+\item Draw charge area and imaginary gaussian surface around it
+  \begin{enumerate}
+  \item Area vector should be either perpendicular or parallel to electric field to simplify dot product
+    \begin{enumerate}
+    \item If area is parallel, then $\vec{E} \cdot \vec{dA}$ integrates to $\vec{E}\vec{A}$
+    \item If area is perpendicular, then $\vec{E} \cdot \vec{dA}$ equates to $0$ and the integral becomes $0$
+    \end{enumerate}
+  \item Field should be uniform to simplify integral
+  \end{enumerate}
+\item Integrate over the surface of the Gaussian surface
+  \begin{enumerate}
+  \item $\oint \vec{E} \cdot d\vec{A}$, where $A$ is the surface area of the gaussian surface
+    \item If everything is constant, you end up with $\vec{E}\vec{A}$
+  \end{enumerate}
+\item Calculate charge enclosed by surface
+  \begin{enumerate}
+  \item Find charge enclosed using $\frac{q_{enc}}{\epsilon_0}$
+    \begin{enumerate}
+    \item If constant charge density, use one of the charge density formulas
+      \begin{enumerate}
+      \item $q = \lambda l$
+      \item $q = \sigma A$
+      \item $q = \rho V$
+      \end{enumerate}
+    \item If nonuniform charge density, integrate it to find total charge
+    \end{enumerate}
+  \end{enumerate}
+\item Substitute values and solve for electric field, $E$
+  \begin{enumerate}
+    \item If the field is constant, this should be equal to $E = \frac{q_{enc}}{\epsilon_0\vec{A}}$
+  \end{enumerate}
+\end{enumerate}
+\section{Electric PE and Work Energy}
+\subsection{Electric Potential Energy}
+Recall the generic equation for potential energy:
+\[ \Delta U = - \int \vec{F} \cdot ds \]
+We can relate this to electric field by substituting in $F \equiv \vec{E}q$ for force to obtain
+\begin{align}
+  \Delta U &= - \int \vec{E}q \cdot ds \\
+  \Delta U &= -q \int_a^b \vec{E} \cdot ds
+\end{align}
+Note that the integral only depends on the end points to determine change in potential energy.  The path that is taken is not important.
+If we substitute in the $E$ for a point charge, we obtain the following equation for change in PE from point charges
+\begin{align}
+  \Delta &U = -q_1 \int_a^b \frac{kq_2}{r^2}dr \\
+  \Delta &U = -kq_1q_2 \int_a^b \frac{1}{r^2} dr \\
+  \Delta &U = -kq_1q_2 \left[ - \frac{1}{r} \right]_a^b \\
+  \Delta &U = kq_1q_2\left(\frac{1}{r_b} - \frac{1}{r_a}\right)
+\end{align}
+If the initial reference point is determined to be infinitely ($\infty$) far away, the $\frac{1}{r_i}$ component can be eliminated and we obtain our formula for change in potential energy.
+\[ \Delta U = \frac{kq_1q_2}{r} \]
+If we look closely, we can see that this contains the equation for change in voltage due to a point charge, so change in potential energy can be rewritten as:
+\[ \Delta U = q \Delta V \]
+\subsection{Work Energy Theorem}
+Work is equal to the integral of force over a given distance
+\[ W = \int_a^b \vec{F} \cdot dx \]
+If we replace $\vec{F}$ with Coulomb's law for force from point charges and solve, we obtain the following equation
+\begin{align}
+  W &= \int_a^b k\frac{q_1q_2}{r^2} dr \\
+  W &= kq_1q_2 \int_a^b \frac{1}{r^2} dr \\
+  W &= kq_1q_2 \left[ -\frac{1}{r} \right]^b_a \\
+  W &= kq_1q_2 \left( \frac{1}{r_a} - \frac{1}{r_b} \right) \\
+\end{align}
+We can relate this to change in potential.  Since the work is nonconservative, it is equal to the sum of the change in potential energy and change in kinetic energy.
+\[ \Sigma W_{NC} = \Delta U + \Delta K \]
+\section{Capacitor Networks}
+A capacitor is an electric component used to store electric charge, the most common of which is the parallel plate capacitor.  The capacitance of a parallel plate capacitor is given by the following relationship:
+\[C=\frac{Q}{V}\]
+According to Gauss' law, the electric field between the two plates is given by
+\[E=\frac{Qd}{\epsilon_0A}\]
+This can be rewritten to relate the capacitance to surface area and plate distance
+\[C=\frac{\epsilon_0A}{d}\]
+\subsection{Capacitors In Series}
+In a circuit, connecting capacitors in series is equivalent to creating one capacitor whose d value is the sum of each individual d value.  The total capacitance value is given by the inverse sum of each inverse capacitance.
+\[\frac{1}{C_{total}} = \frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_3} + \ldots +\frac{1}{C_n}\]
+The total voltage, $V$, of the capacitors is given by the sum of each individual capacitor's change in potential.
+\[V_{total} = V_1 + V_2 + V_3 + \ldots + V_n\]
+The charge $q$ remains constant for each capacitor.  It is the same as the total charge of the system.
+\subsection{Capacitors In Parallel}
+Connecting capacitors in parallel is equivalent to creating one capacitor whose surface area is the sum of each individual surface area.  The total capacitance is the sum of each capacitance.
+\[C_{total} = C_1 + C_2 + C_3 + \ldots + C_n\]
+The total charge of the system is the sum of each capacitor's charge.
+\[Q_{total} + Q_1 + Q_2 + Q_3 + \ldots + Q_n\]
+The voltage of each capacitor remains constant.  It is the same as the total voltage of the system.
+\subsection{Solving Capacitor Networks}
+To solve a network of capacitors, group similar capacitors to create equivalent capacitances.  Keep solving until the total capacitance of the network is reached, then work backwards to find individual charges and voltages.  Use the equation
+\[Q = C \Delta V\]
+\end{document}

@@ -1,0 +1,197 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{commath}
+\usepackage[margin=1in]{geometry}
+\usepackage{xfrac}
+
+\title{PHY201 Portfolio 2}
+\author{Nicolas Nytko}
+\date{October 21, 2016}
+
+\nonumber
+
+\begin{document}
+\maketitle
+\newpage
+\section{Resistor Networks}
+A resistor is an electric component used to store impede current flow.  The voltage, current, and resistance of any given resistor is given by the following proportion:
+\[R=\frac{V}{I} \quad V=IR \quad I=\frac{V}{R} \]
+Any device that follows Ohm's law is considered to be ohmic.  If the current vs voltage graph of the device is graphed, it would be linear, revealing a linear relationship between resistance, current, and voltage.
+\subsection{Resistivity}
+The resistance of a resistor is dependent on a property called \textit{resistivity}, $\rho$, and also its length and cross sectional area.
+\[ R = \rho \frac{l}{A} \]
+\[ l = \text{length} \quad A = \text{cross-sectional area} \]
+\subsubsection{Temperature}
+The resistivity of resistors is often dependent on its temperature.  It is given by the following expression:
+\[ \rho = \rho_0 \left[ 1 + \alpha (T - T_0) \right] \]
+Where $\rho_0$ is the reference resistivity at temperature $T_0$, which is often either 20{\textdegree}C or 0{\textdegree}C.  $\alpha$ is the \textit{temperature coefficient of resistivity}, it is a constant number.
+\subsection{Resistors In Series}
+Connecting resistors in series with one another is equivalent to having one resistor whose resistance is the sum of each individual one.  So, the equivalent resistance is given by:
+\[R_{eq} = R_1 + R_2 + R_3 + \ldots + R_n\]
+The total voltage of the system is found by adding each voltage.
+\[V_{eq} = V_1 + V_2 + V_3 + \ldots + V_n\]
+The current of each resistor remains constant.  It is the same as the current of the system.
+\subsection{Resistors In Parallel}
+Multiple resistors in series can be grouped together as one resistor.  The equivalent resistance of this can be found by adding the inverse sums.
+\[\frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3} + \ldots + \frac{1}{R_n}\]
+The total current of the system is the sum of each resistor's charge.
+\[I_{eq} = I_1 + I_2 + I_3 + \ldots + I_n\]
+The voltage of each resistor remains constant.  It is the same as the total voltage of the system.
+\subsection{Solving Resistor Networks}
+\begin{enumerate}
+\item Draw out the complete circuit and label resistors and batteries
+\item Group together resistors in series or parallel and find their equivalent resistance
+  \begin{enumerate}
+  \item Pick a small branch of the circuit
+  \item The resistors are usually right next to each other
+  \end{enumerate}
+\item Redraw the new circuit each time you simplify a branch
+\item Repeat until you have the whole circuit as one equivalent resistor and one voltage source
+\item Since the total voltage of the circuit is equivalent to the power source, work backwards to find currents and voltages
+  \begin{enumerate}
+  \item When resistors are in parallel, they have equal voltages
+  \item When resistors are in series, they have equal currents
+  \item Remember $V=IR$
+  \end{enumerate}
+\end{enumerate}
+\subsection{Drift Velocity}
+Drift velocity of electrons in a current-carrying wire can be found using the following formula:
+\[I_{avg} = nqv_dA\]
+Where $n$ is the number of particles, $q$ is the charge of each particle, $v_d$ is the drift velocity, and $A$ is the cross sectional area of the wire.
+\begin{enumerate}
+\item Find the average current of the wire
+  \begin{enumerate}
+    \item If current density is constant, then use it
+    \item If current density isn't constant, then integrate to find the current
+    \end{enumerate}
+  \item Plug in all values and then solve for $v_d$
+\end{enumerate}
+\section{Kirchhoff's Rules}
+When starting a Kirchhoff's laws problem, number and label the direction of all currents in the circuit.  Direction is arbitrary, but must be kept consistent.  Whenever a current hits a junction, split it into different currents.
+\subsection{Junction Rule}
+At any point junction point, the sum of the currents going in is equal to the sum of currents going out.
+\[\Sigma I_{in} = \Sigma I_{out}\]
+For each junction point, we write an equation that relates the currents we have defined as going in as equal to the currents defined as going out.
+\subsection{Loop Rule}
+The sum of changes along any loop of wire is always zero.  Going from negative to positive terminal of a battery will increase the voltage by the battery's voltage.  Going across a resistor in the direction of your current will cause a voltage drop, while going across a resistor against the current will cause a voltage ``gain''.  This is written as an equation that will equal zero.
+\[\Sigma \Delta V_n = 0\]
+\subsection{Solving as a Matrix}
+To solve a Kirchhoff's laws problem, we will need to create a matrix and perform a gaussian elimination on it to get an answer into \textit{reduced row echelon form}.  The size of the matrix depends on how many unknowns currents we have.
+If we have $x$ currents, then the size of the matrix should be $x$ rows $\times \ (x+1)$ columns. \\
+If we have $y$ junctions in our problem, then we use $y-1$ of our junction rule equations, and fill the rest of the matrix with loop rule equations. \\
+Here is an example matrix:
+\[
+  \left[
+  \begin{array}{cccc|c}
+    a_1 & b_1 & c_1 & d_1 & 0 \\
+    a_2 & b_2 & c_2 & d_2 & 0 \\
+    a_3 & b_3 & c_3 & d_3 & 2 \\
+    a_4 & b_4 & c_4 & d_4 & 6 \\
+  \end{array}
+  \right]
+\]
+The first column represents the coefficient of our first current in each equation, the second represents the coefficient of current 2, and so on.  The last column represents any constant value that the equation is equal to. \textit{i.e.}, the last row in the example matrix represents $a_4 + b_4 + c_4 + d_4 = 6$. \\
+This matrix can be solved using a \texttt{rref()} function on any calculator or CAS.  The resultant matrix will look similar to an identity matrix with an added column on the right.  This last column will contain the values of each current in order from $I_1$ to $I_n$, $n$ being the number of currents being solved for.
+\section{RC Circuits}
+Any given circuit that contains both resistors and capacitors will have something called a time constant, $\tau$,
+\[ \tau = RC \]
+where $R$ is the total resistance of the circuit and $C$ is the total capacitance of the circuit.  The time constant is the amount of time that it takes the capacitor to reach 63\% of its maximum voltage, it is measured in seconds.
+When the capacitor is charging, we can use these formulas to determine the amount of voltage or charge given $t=\text{time}$.
+\[ Q(t) = Q_0 ( 1 - e^{-\frac{t}{\tau}} ) \]
+\[ V(t) = V_{battery} ( 1 - e^{-\frac{t}{\tau}} ) \]
+When the capacitor is discharging, these formulas are used to determine the voltage or charge.
+\[ Q(t) = Q_0e\frac{-t}{\tau} \]
+\[ V(t) = V_0e\frac{-t}{\tau} \]
+The current flowing through the circuit can be given by
+\[ I(t) = \frac{V}{R}e\frac{-t}{\tau} \]
+it does not depend on whether or not the capacitor is charging or discharging.
+\subsection{Problem Solving}
+\begin{enumerate}
+\item Find the equivalent resistance of the circuit
+  \begin{enumerate}
+  \item Series: $R_{eq} = R_1 + R_2 + R_3 \ldots$
+  \item Parallel: $\frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3} \ldots$
+  \end{enumerate}
+\item Find the equivalent capacitance of the circuit
+  \begin{enumerate}
+  \item Series: $\frac{1}{C_{eq}} = \frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_3} \ldots$
+  \item Parallel: $C_{eq} = C_1 + C_2 + C_3 \ldots$
+  \end{enumerate}
+\item Solve $\tau=RC$
+\end{enumerate}
+\subsection{Multi Loop Circuits}
+If the capacitor is fully charged in a multi-loop circuit, then that branch can be ignored because no current is flowing through it.  If possible, turn it into a single loop by finding the equivalent resistance and capacitance.
+\section{Magnetic Force Problems}
+\subsection{Force on a Wire}
+The magnetic force on a wire from a field is:
+\[ \vec{F}_B = I\vec{L} \times \vec{B} \]
+Where $I$ is the current of the wire, $\vec{L}$ is a vector pointing in the direction of the current, whose magnitude is the length of the wire. $\vec{B}$ is the direction of the magnetic field. When using the right hand rule, your pointer finger is the $I\vec{L}$, your middle finger is the $\vec{B}$ field, and your thumb is the resultant $\vec{F}_b$.
+\subsection{Force on a Charged Particle from Field}
+The magnetic force on a particle from a field:
+\[ \vec{F}_B = q\vec{v} \times \vec{B} \]
+Where $q$ is the charge of the particle, $\vec{v}$ is the initial velocity of the vector, and $\vec{B}$ is the direction of the magnetic field. 
+\subsubsection{Circular Path of a Particle}
+When a particle enters a field, its radius to some fixed point will stay constant, as well as the magnitude of its velocity.  This is given by the equation:
+\[ r = \frac{mv}{qB} \]
+The period of rotation for the particle is:
+\[ T = \frac{2\pi m}{qB} \]
+\subsection{Force between two Wires}
+The force from two parallel wires on each other is given by:
+\[ \frac{F}{l} = \frac{\mu_0 I_1 I_2}{2\pi a} \]
+$l$ is the length of both wires (assumed to be the same), $I_1$ and $I_2$ are the currents of wire 1 and 2, respectively. $a$ is the distance between the wires.  If the current on the wires are both travelling in the same direction, the force will be attractive.  If the current is opposite, the force will be repulsive.
+\subsection{Torque and Magnetic Moment}
+Torque of a coil of wire is defined as:
+\[ \tau = nI\vec{A} \times \vec{B} \]
+Where $n$ is the number of loops, $I$ is the current, and $A$ is the cross-sectional area, perpendicular to the coil of wire.  $nI\vec{A}$ can be reduced to just $\mu$, the \textit{magnetic dipole moment} of the loop.
+\[ \mu = nI\vec{A} \]
+So, torque can be related to $\mu$ and $\vec{B}$:
+\[ \tau = \mu \times \vec{B} \]
+If finding torque of a circuit without any loops of wire, $n=1$.
+\section{Biot-Savart Law}
+The Biot-Savart law can be used to find the magnetic field from a current-carrying wire at some point.  It is given by the following expression:
+\[\vec{B} = \frac{\mu_0}{4\pi} \int \frac{Id\vec{s} \times \hat{r}}{r^2} \]
+$\mu_0$ is a constant called the \textit{permeability of free space}. $d\vec{s}$ is each piece of wire, and $\hat{r}$ is a unit vector pointing from $d\vec{s}$ to the point $P$, where we are measuring the field.
+\subsection{Problem Solving}
+\begin{enumerate}
+\item Draw your free body diagram
+  \begin{enumerate}
+  \item Determine the $\hat{r}$ vector.  It points from $d\vec{s}$ to $P$, the point you are determining the field at.  It is a unit vector with magnitude of 1.
+  \item Draw and label $P$, $d\vec{s}$, and the direction of your currents.
+  \end{enumerate}
+\item Find r
+  \begin{enumerate}
+  \item It is the distance from each portion of $d\vec{s}$ to $P$.
+  \item If integrating an infinite wire, set it equal in terms of $\theta$ to integrate more easily.
+  \end{enumerate}
+\item Find $d\vec{s}$
+  \begin{enumerate}
+  \item $d\vec{s}$ is the derivative of the arc length of the wire
+  \end{enumerate}
+\item Determine limits of integration
+\item Evaluate the integral
+\end{enumerate}
+\subsection{Ready-Made Equations}
+The magnetic field from an infinite wire and from a solenoid are given to us and listed on the formulae sheet.
+\[ \text{Infinite Wire:} \]
+\[ B = \frac{\mu_0 I}{2\pi r} \]
+$r$ is the distance from the wire to some point you are measuring the field at.
+\[ \text{Center of a Solenoid:} \]
+\[ B = \mu_0 \frac{N}{l} I  \]
+$N$ is the total number of loops in the solenoid, $l$ is the length of the solenoid. $\frac{N}{l}$ can be replaced with just $n$, the nubmer of loops per unit length.
+\section{Ampere's Law}
+Ampere's law is the magnetic field analogue to Gauss's law for electricity.  We define a 1-dimensional closed loop that magnetic field flows through.  The integral of the loop dotted with the magnetic field is equal to the current enclosed multiplied with $\mu_0$.  In mathematical terms, this is equal to:
+\[\oint \vec{B} \cdot d\vec{s} = \mu_0 I_{enc} \]
+\subsection{Solving an Ampere's Law Problem}
+\begin{enumerate}
+\item Create a 1D shape that the magnetic field flows through
+\item Integrate $\oint \vec{B} \cdot d\vec{s}$, this should leave you with $\vec{B} \cdot S$, where S is the arc length/circumference of the shape.
+\item Find the amount of current enclosed.
+  \begin{enumerate}
+  \item If the current is constant, use that.
+  \item If a current density is given, integrate that to find the current enclosed.
+  \end{enumerate}
+\item Solve for $\vec{B}$ or whatever you are trying to find.
+\end{enumerate}
+\end{document}
